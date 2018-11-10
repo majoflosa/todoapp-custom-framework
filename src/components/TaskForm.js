@@ -1,26 +1,25 @@
 import _t from 'underscore.template';
-import navbarTemplate from '../templates/navbarTemplate.html';
+
+import taskCreatorTemplate from '../templates/taskCreatorTemplate.html';
 
 import hookElement from '../services/hookElement';
 
-class NavBar {
+export default class TaskForm {
     constructor( hook ) {
         this.hook = hook;
-        
+
         this.el = document.createElement('div');
-        this.id = 'header';
-        this.template = _t( navbarTemplate );
+        this.id = 'task-creator';
+        this.template = _t( taskCreatorTemplate );
 
         this.init();
     }
 
     init() {
-        hookElement( this.el, this );
+        hookElement( this.el, this);
         this.render();
     }
 
     render() {
     }
 }
-
-export default NavBar;

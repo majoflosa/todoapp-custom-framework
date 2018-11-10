@@ -18,11 +18,11 @@ class App {
     }
 
     init() {
+        hookElement( this.el, this );
         this.render();
     }
 
     render() {
-        hookElement( this.el, this );
     }
 }
 
