@@ -1,7 +1,9 @@
+import _t from 'underscore.template';
 import template from '../templates/test.html';
 
 const testFn = () => {
-    document.getElementsByTagName('body')[0].innerHTML = template;
+    let _template = _t( template );
+    document.getElementsByTagName('body')[0].innerHTML = _template({test: 'testing!!!'});
     // console.log( template );
     
     let newEl = document.createElement('button');
