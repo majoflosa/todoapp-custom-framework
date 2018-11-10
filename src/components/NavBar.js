@@ -1,10 +1,17 @@
 import _t from 'underscore.template';
 import navbarTemplate from '../templates/navbarTemplate.html';
 
+import hookElement from '../services/hookElement';
+
 class NavBar {
-    constructor() {
+    constructor( hook ) {
+        this.hook = hook;
+        
+        this.el = document.createElement('div');
+        this.id = 'header';
         this.template = _t( navbarTemplate );
-        // this.init();
+
+        this.init();
     }
 
     init() {
@@ -12,10 +19,7 @@ class NavBar {
     }
 
     render() {
-        let $navbar = document.createElement('div');
-        $navbar.innerHTML = this.template();
-
-        return $navbar;
+        hookElement( this.el, this );
     }
 }
 

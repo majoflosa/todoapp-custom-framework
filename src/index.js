@@ -1,5 +1,4 @@
 import '../src/css/style.css';
+import App from './components/App';
 
-import App from './js/App';
-
-let app = new App();
+let app = new App( document.getElementById('app') );
