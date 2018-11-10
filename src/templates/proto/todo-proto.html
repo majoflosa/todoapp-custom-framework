@@ -1,0 +1,64 @@
+ 
+<div class="outer-wrap">
+    <div class="content-wrap">
+
+        <header id="header">
+            <div id="logo">ToDos</div>
+
+            <nav id="site-nav">
+                <a href="#" class="current">All</a>
+                <a href="#">Active</a>
+                <a href="#">Unstarted</a>
+                <a href="#">Ongoing</a>
+                <a href="#">Revising</a>
+                <a href="#">Done</a>
+            </nav>
+        </header>
+
+        <main id="body">
+            <div id="task-creator">
+                <input type="text" id="task-input" placeholder="Enter task title...">
+                <button id="create-task" class="btn">Add Task</button>
+            </div>
+
+            <div id="task-list">
+                <div class="task-wrap">
+                    <div class="task-title-wrap">
+                        <span class="mark-done active"></span> 
+                        <span class="task-status ongoing">Ongoing</span>
+                        <span class="task-title">Task title here</span>
+                    </div>
+                    <div class="task-links">
+                        <a href="/details" class="btn task-details">Details</a>
+                        <span class="delete-task btn-border">x</span>
+                    </div>
+                </div>
+
+                <div class="task-wrap done">
+                    <div class="task-title-wrap">
+                        <span class="mark-done"></span> 
+                        <span class="task-status ongoing">Done</span>
+                        <span class="task-title">Task title here</span>
+                    </div>
+                    <div class="task-links">
+                        <a href="/details" class="btn task-details">Details</a>
+                        <span class="delete-task btn-border">x</span>
+                    </div>
+                </div>
+
+                <div class="task-wrap">
+                    <div class="task-title-wrap">
+                        <span class="mark-done active"></span> 
+                        <span class="task-status ongoing">Ongoing</span>
+                        <span class="task-title">Task title here</span>
+                    </div>
+                    <div class="task-links">
+                        <a href="/details" class="btn task-details">Details</a>
+                        <span class="delete-task btn-border">x</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
