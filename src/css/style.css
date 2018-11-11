@@ -78,7 +78,7 @@ input[type="text"]::placeholder, textarea::placeholder {
   background: #555555;
   color: #ffffff;
   padding: 10px 15px;
-  border-radius: 3px;
+  border-radius: 3px 3px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

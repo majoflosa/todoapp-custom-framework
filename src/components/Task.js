@@ -1,20 +1,30 @@
 import _t from 'underscore.template';
 import taskTemplate from '../templates/taskTemplate.html';
 
-import hookElement from '../services/hookElement';
-
 export default class Task {
-    constructor( hook ) {
+    constructor( hook, data = {} ) {
         this.hook = hook;
+        this.data = data;
 
         this.el = document.createElement('article');
-        this.className = 'task-wrap';
+        this.el.className = 'task-wrap';
         this.template = _t( taskTemplate );
 
-        this.init();
+        // fetch initial data
+        // this.data.whatever = fetchedData;
+
+        this.render( this.data );
+
+        this.handleNewTask = this.handleNewTask.bind( this );
     }
 
-    init() {
-        hookElement( this.el, this );
+    render( data = {} ) {
+        this.el.innerHTML = this.template( data );
+
+        this.hook.appendChild( this.el );
+    }
+
+    handleNewTask( data ) {
+        this.render( data );
     }
 }

@@ -1,8 +1,8 @@
 <!-- <div class="task-wrap"> -->
-    <div class="task-title-wrap">
+    <div class="task-title-wrap <% if ( status === 'done') print('done'); %>">
         <span class="mark-done active"></span> 
-        <span class="task-status ongoing">Ongoing</span>
-        <span class="task-title">Task title here</span>
+        <span class="task-status ongoing"><%= status %></span>
+        <span class="task-title"><%= title %></span>
     </div>
     <div class="task-links">
         <a href="/details" class="btn task-details">Details</a>

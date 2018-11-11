@@ -1,8 +1,6 @@
 import _t from 'underscore.template';
 import navbarTemplate from '../templates/navbarTemplate.html';
 
-import hookElement from '../services/hookElement';
-
 class NavBar {
     constructor( hook ) {
         this.hook = hook;
@@ -15,11 +13,14 @@ class NavBar {
     }
 
     init() {
-        hookElement( this.el, this );
         this.render();
     }
-
+    
     render() {
+        this.el.id = this.id;
+        this.el.innerHTML = this.template();
+
+        this.hook.appendChild( this.el );
     }
 }
 

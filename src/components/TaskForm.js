@@ -2,24 +2,53 @@ import _t from 'underscore.template';
 
 import taskCreatorTemplate from '../templates/taskCreatorTemplate.html';
 
-import hookElement from '../services/hookElement';
-
 export default class TaskForm {
-    constructor( hook ) {
+    constructor( hook, data = {} ) {
         this.hook = hook;
+        this.data = data;
 
         this.el = document.createElement('div');
-        this.id = 'task-creator';
+        this.el.id = 'task-creator';
         this.template = _t( taskCreatorTemplate );
 
-        this.init();
-    }
+        this.submitForm = this.submitForm.bind( this );
 
-    init() {
-        hookElement( this.el, this);
         this.render();
+
+        this.cacheDOM();
+        this.bindEvents();
+
+        // event listeners
     }
 
+    cacheDOM() {
+        this.DOM = {
+            taskInput: this.el.querySelector('#task-input'),
+            taskButton: this.el.querySelector('#create-task')
+        };
+    }
+    
+    bindEvents() {
+        this.DOM.taskButton.addEventListener('click', (e) => this.submitForm(e) );
+        this.DOM.taskInput.addEventListener('keypress', (e) => this.submitForm(e) );
+    }
+    
     render() {
+        this.el.innerHTML = this.template();
+
+        this.hook.appendChild( this.el );
+    }
+
+
+    submitForm( e ) {
+        if ( e.type === 'keypress' && e.which !== 13 ) return false;
+        
+        let { pubsub } = this.data;
+        pubsub.emit('new task', {
+            title: this.DOM.taskInput.value,
+            status: 'unstarted',
+            description: 'no description'
+        });
+        this.DOM.taskInput.value = '';
     }
 }
