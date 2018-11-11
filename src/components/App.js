@@ -2,6 +2,8 @@ import _t from 'underscore.template';
 
 import NavBar from './NavBar';
 import Body from './Body';
+
+import dom from '../services/dom';
 import PubSub from '../services/pubsub';
 
 class App {
@@ -9,8 +11,10 @@ class App {
         this.hook = hook;
         this.pubsub = new PubSub();
 
-        this.el = document.createElement('div');
-        this.el.className = 'content-wrap';
+        this.el = dom({
+            element: 'div',
+            className: 'content-wrap'
+        });
 
         this.children = [NavBar, Body];
 

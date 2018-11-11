@@ -1,15 +1,16 @@
-import _t from 'underscore.template';
-
-import taskCreatorTemplate from '../templates/taskCreatorTemplate.html';
+// import _t from 'underscore.template';
+// import taskCreatorTemplate from '../templates/taskCreatorTemplate.html';
+import TaskFormDomTree from '../domTrees/taskFormDomTree';
 
 export default class TaskForm {
     constructor( hook, data = {} ) {
         this.hook = hook;
         this.data = data;
 
-        this.el = document.createElement('div');
-        this.el.id = 'task-creator';
-        this.template = _t( taskCreatorTemplate );
+        // this.el = document.createElement('div');
+        // this.el.id = 'task-creator';
+        // this.template = _t( taskCreatorTemplate );
+        this.el = TaskFormDomTree();
 
         this.submitForm = this.submitForm.bind( this );
 
@@ -34,7 +35,7 @@ export default class TaskForm {
     }
     
     render() {
-        this.el.innerHTML = this.template();
+        // this.el.innerHTML = this.template();
 
         this.hook.appendChild( this.el );
     }

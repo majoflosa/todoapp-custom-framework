@@ -1,13 +1,16 @@
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
+import dom from '../services/dom';
 
 export default class Body {
     constructor( hook, data ) {
         this.hook = hook;
         this.data = data;
 
-        this.el = document.createElement('main');
-        this.el.id = 'body';
+        this.el = dom({
+            element: 'main',
+            id: 'body'
+        });
 
         this.children = [TaskForm, TaskList];
 

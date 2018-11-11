@@ -1,12 +1,14 @@
 import Task from './Task';
+import TaskListDomTree from '../domTrees/taskListDomTree';
 
 export default class TaskList {
     constructor( hook, data = {} ) {
         this.hook = hook;
         this.data = data;
 
-        this.el = document.createElement('div');
-        this.el.id = 'task-list';
+        // this.el = document.createElement('div');
+        // this.el.id = 'task-list';
+        this.el = TaskListDomTree();
 
         // fetch initial data
         this.data.tasks = [
@@ -31,9 +33,7 @@ export default class TaskList {
         }
 
         this.el.innerHTML = '';
-        data.forEach( task => {
-            new this.child( this.el, task );
-        });
+        data.forEach( task => new this.child(this.el, task) );
         
         this.hook.appendChild( this.el );
     }
