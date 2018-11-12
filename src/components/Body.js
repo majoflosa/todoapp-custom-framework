@@ -8,7 +8,6 @@ export default class Body {
         this.data = data;
 
         this.el = dom('main', {id: 'body'});
-
         this.children = [TaskForm, TaskList];
 
         this.render();
