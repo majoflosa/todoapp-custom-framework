@@ -11,10 +11,7 @@ class App {
         this.hook = hook;
         this.pubsub = new PubSub();
 
-        this.el = dom({
-            element: 'div',
-            className: 'content-wrap'
-        });
+        this.el = dom('div', {className: 'content-wrap'});
 
         this.children = [NavBar, Body];
 

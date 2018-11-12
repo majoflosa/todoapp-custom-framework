@@ -1,29 +1,45 @@
-export default function dom( tree ) {
-    tree.element = tree.element || 'div';
-    let $domTree = document.createElement( tree.element );
+// export default function dom( tree ) {
+//     tree.element = tree.element || 'div';
+//     let $domTree = document.createElement( tree.element );
     
-    if ( tree.attributes ) {
-        for (let attr in tree.attributes ) {
-            let domName = attr === 'className' ? 'class' : attr;
-            $domTree.setAttribute( domName, tree.attributes[attr] );
-        }
-    } else {
-        $domTree.className = tree.className || '';
-        $domTree.id = tree.id || '';
+//     if ( tree.attributes ) {
+//         for (let attr in tree.attributes ) {
+//             let domName = attr === 'className' ? 'class' : attr;
+//             $domTree.setAttribute( domName, tree.attributes[attr] );
+//         }
+//     } else {
+//         $domTree.className = tree.className || '';
+//         $domTree.id = tree.id || '';
+//     }
+
+//     if ( tree.children ) {
+//         tree.children.forEach( child => {
+//             $domTree.appendChild( child );
+//         });
+//     } else if ( tree.innerHTML ) {
+//         $domTree.innerHTML = tree.innerHTML;
+//     } else {
+//         $domTree.innerText = tree.innerText || '';
+//     }
+
+//     return $domTree;
+// }
+
+export default function dom( element, attributes, content, data = {} ) {
+    let $domTree = document.createElement( element );
+    
+    for (let attr in attributes) {
+        let domName = attr === 'className' ? 'class' : attr;
+        $domTree.setAttribute( domName, attributes[attr] );
     }
 
-    if ( tree.children ) {
-        tree.children.forEach( child => {
-            $domTree.appendChild( child );
-        });
-    } else if ( tree.innerHTML ) {
-        $domTree.innerHTML = tree.innerHTML;
-    } else {
-        $domTree.innerText = tree.innerText || '';
-    }
+    if ( typeof content === 'string' || !content ) $domTree.innerHTML = content || '';
+    else content.forEach( child => $domTree.appendChild(child) );
 
     return $domTree;
 }
+
+
 
 // let example = {
 //     element: 'article',

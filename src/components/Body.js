@@ -7,10 +7,7 @@ export default class Body {
         this.hook = hook;
         this.data = data;
 
-        this.el = dom({
-            element: 'main',
-            id: 'body'
-        });
+        this.el = dom('main', {id: 'body'});
 
         this.children = [TaskForm, TaskList];
 
