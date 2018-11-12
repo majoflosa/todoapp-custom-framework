@@ -1,5 +1,3 @@
-// import _t from 'underscore.template';
-// import taskCreatorTemplate from '../templates/taskCreatorTemplate.html';
 import TaskFormDomTree from '../domTrees/taskFormDomTree';
 
 export default class TaskForm {
