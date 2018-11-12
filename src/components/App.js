@@ -1,5 +1,3 @@
-import _t from 'underscore.template';
-
 import NavBar from './NavBar';
 import Body from './Body';
 
@@ -19,9 +17,7 @@ class App {
     }
 
     render() {
-        this.children.forEach( Child => {
-            new Child( this.el, {pubsub: this.pubsub} );
-        });
+        this.children.forEach( Child => new Child( this.el, {pubsub: this.pubsub} ) );
 
         this.hook.appendChild( this.el );
     }

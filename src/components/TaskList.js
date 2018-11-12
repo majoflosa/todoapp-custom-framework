@@ -1,14 +1,12 @@
 import Task from './Task';
-import TaskListDomTree from '../domTrees/taskListDomTree';
+import dom from '../services/dom';
 
 export default class TaskList {
     constructor( hook, data = {} ) {
         this.hook = hook;
         this.data = data;
 
-        // this.el = document.createElement('div');
-        // this.el.id = 'task-list';
-        this.el = TaskListDomTree();
+        this.el = dom('div', {id: 'task-list'});
 
         // fetch initial data
         this.data.tasks = [

@@ -7,19 +7,17 @@ export default class TaskForm {
         this.hook = hook;
         this.data = data;
 
-        // this.el = document.createElement('div');
-        // this.el.id = 'task-creator';
-        // this.template = _t( taskCreatorTemplate );
         this.el = TaskFormDomTree();
-
-        this.submitForm = this.submitForm.bind( this );
-
+        
         this.render();
-
+        
         this.cacheDOM();
         this.bindEvents();
+        
+        // adding event listeners
 
-        // event listeners
+        // binding event handlers' context
+        this.submitForm = this.submitForm.bind( this );
     }
 
     cacheDOM() {
@@ -35,11 +33,13 @@ export default class TaskForm {
     }
     
     render() {
-        // this.el.innerHTML = this.template();
-
         this.hook.appendChild( this.el );
     }
 
+
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    //  Begin Event handlers
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     submitForm( e ) {
         if ( e.type === 'keypress' && e.which !== 13 ) return false;

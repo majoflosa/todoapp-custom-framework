@@ -11,18 +11,25 @@ export default class Body {
 
         this.children = [TaskForm, TaskList];
 
-        this.init();
+        this.render();
+
+        // event listeners
+        this.data.pubsub.on('route changed', this.handleRouteChange );
+
+        // binding event handlers' context
+        this.handleRouteChange = this.handleRouteChange.bind( this );
     }
 
-    init() {
-        this.render();
-    }
-    
     render() {
         this.children.forEach( Child => {
             new Child( this.el, {pubsub: this.data.pubsub } );
         });
 
         this.hook.appendChild( this.el );
+    }
+
+
+    handleRouteChange( route ) {
+        console.log( 'route: ', route );
     }
 }
