@@ -8,7 +8,7 @@ const TaskDomTree = (data = {}) => {
                     dom('span', {className: 'task-title'}, data.title)
                 ]),
                 dom('div', {className: 'task-links'}, [
-                    dom('a', {href: '#', className: 'btn task-details'}, 'Details'),
+                    dom('a', {href: `#/details/${data.id}`, className: 'btn task-details'}, 'Details'),
                     dom('span', {className: 'delete-task btn-border'}, 'x')
                 ])
     ]);

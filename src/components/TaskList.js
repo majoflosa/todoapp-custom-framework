@@ -10,9 +10,9 @@ export default class TaskList {
 
         // fetch initial data
         this.data.tasks = [
-            {title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
-            {title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
-            {title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
+            {id: 1, title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
+            {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
+            {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
         ];
 
         this.child = Task;
@@ -31,7 +31,10 @@ export default class TaskList {
         }
 
         this.el.innerHTML = '';
-        data.forEach( task => new this.child(this.el, task) );
+        data.forEach( task => new this.child(this.el, {
+            task: task,
+            pubsub: this.data.pubsub
+        }) );
         
         this.hook.appendChild( this.el );
     }
