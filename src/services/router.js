@@ -19,7 +19,7 @@ export default class Router {
         currentRoute.view = hashParts[0] || 'home';
         currentRoute.parameters = hashParts.filter( (part, index) => index !== 0 );
         
-        // console.log( currentRoute )
+        console.log( currentRoute )
         this.data.pubsub.emit('view changed', currentRoute);
         
         return currentRoute;
