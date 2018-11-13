@@ -35,6 +35,8 @@ class NavBar {
 
 
     handleClickNavLink( event ) {
+        event.preventDefault();
+        
         let {pubsub} = this.data;
         pubsub.emit('route changed', event.target.href);
     }

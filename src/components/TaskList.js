@@ -8,19 +8,11 @@ export default class TaskList {
 
         this.el = dom('div', {id: 'task-list'});
 
-        // fetch initial data
-        this.data.tasks = [
-            {id: 1, title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
-            {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
-            {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
-        ];
-
         this.child = Task;
         
         this.render( this.data.tasks );
 
         // event listeners
-        this.data.pubsub.on('new task', (data) => this.handleNewTask(data) );
     }
     
     render( data = {} ) {
@@ -37,11 +29,5 @@ export default class TaskList {
         }) );
         
         this.hook.appendChild( this.el );
-    }
-
-    handleNewTask( data ) {
-        // on 'new task' 
-        this.data.tasks.push( data );
-        this.render( this.data.tasks );
     }
 }

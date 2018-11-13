@@ -44,6 +44,7 @@ export default class TaskForm {
         
         let { pubsub } = this.data;
         pubsub.emit('new task', {
+            id: this.data.tasks[this.data.tasks.length - 1].id + 1,
             title: this.DOM.taskInput.value,
             status: 'unstarted',
             description: 'no description'

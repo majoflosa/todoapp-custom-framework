@@ -190,6 +190,10 @@ input[type="text"]::placeholder, textarea::placeholder {
   margin-bottom: 3px;
 }
 
+.delete-task {
+  margin-left: 5px;
+}
+
 .back-wrap {
   border-bottom: 1px dashed #dddddd;
   padding: 0 0 5px;

@@ -37,6 +37,7 @@ export default class Task {
     }
 
     handleDeleteTask( event ) {
-        console.log( 'delete task: ', this.data.task.id );
+        event.preventDefault();
+        this.data.pubsub.emit('task deleted', this.data.task.id );
     }
 }
