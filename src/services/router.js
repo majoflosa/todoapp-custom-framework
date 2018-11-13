@@ -1,20 +1,31 @@
 export default class Router {
-    constructor( location ) {
-        this.location = location;
+    constructor( data = {} ) {
+        this.data = data;
+        this.location = this.data.location;
 
-        this.hash = this.location.hash || '#/';
+        this.setCurrentRoute = this.setCurrentRoute.bind( this );
+        this.setCurrentRoute( this.location.href );
 
-        let hashParts = this.hash.split('/');
-        hashParts.shift();
-
-        this.currentView = hashParts[0] || 'home';
-        this.parameters = hashParts[1] ? hashParts.splice(1, hashParts.length - 1) : null;
-
-        console.log( 'this.currentView: ', this.currentView );
-        console.log( 'this.parameters: ', this.parameters );
+        this.data.pubsub.on( 'route changed', (href) => this.setCurrentRoute(href) );
     }
 
-    getCurrentView() {
-        return this.currentView;
+    setCurrentRoute( href ) {
+        let currentRoute = {};
+
+        let hashParts = href.split('#/');
+            hashParts.shift();
+            hashParts = hashParts[0].split('/');
+
+        currentRoute.view = hashParts[0] || 'home';
+        currentRoute.parameters = hashParts.filter( (part, index) => index !== 0 );
+        
+        // console.log( currentRoute )
+        this.data.pubsub.emit('view changed', currentRoute);
+        
+        return currentRoute;
+    }
+
+    handleRouteChanged( ) {
+
     }
 }

@@ -10,7 +10,10 @@ class App {
         this.hook = hook;
         this.data = data
         this.pubsub = new PubSub();
-        this.router = new Router( this.data.window.location );
+        this.router = new Router({
+            location: this.data.window.location,
+            pubsub: this.pubsub
+        });
 
         this.el = dom('div', {className: 'content-wrap'});
 

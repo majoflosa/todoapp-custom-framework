@@ -12,11 +12,12 @@ export default class Body {
 
         this.render();
 
-        // event listeners
-        this.data.pubsub.on('route changed', this.handleRouteChange );
-
         // binding event handlers' context
         this.handleRouteChange = this.handleRouteChange.bind( this );
+
+        // event listeners
+        // this.data.pubsub.on('route changed', this.handleRouteChange );
+
     }
 
     render() {
@@ -29,6 +30,6 @@ export default class Body {
 
 
     handleRouteChange( route ) {
-        console.log( 'route: ', route );
+        console.log( this.data.router.getCurrentRoute() );
     }
 }
