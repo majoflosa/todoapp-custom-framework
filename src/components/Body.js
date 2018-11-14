@@ -1,5 +1,7 @@
 import TaskForm from './TaskForm';
 import TaskList from './TaskList';
+import TaskDetails from './TaskDetails';
+
 import dom from '../services/dom';
 
 export default class Body {
@@ -16,8 +18,13 @@ export default class Body {
             {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
             {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
         ];
+        this.data.taskIndex = this.data.tasks.length;
 
-        this.render();
+        this.render({
+            tasks: this.data.tasks, 
+            taskIndex: this.data.taskIndex, 
+            pubsub: this.data.pubsub 
+        });
 
         // binding event handlers' context
         this.updateView = this.updateView.bind( this );
@@ -29,12 +36,13 @@ export default class Body {
         this.data.pubsub.on( 'new task', (task) => this.addTask(task) );
         this.data.pubsub.on( 'task deleted', (taskId) => this.deleteTask(taskId) );
 
+        // this.updateView( {view: 'home'} );
     }
 
-    render() {
+    render( data = {} ) {
         this.el.innerHTML = '';
         this.children.forEach( Child => {
-            new Child( this.el, {tasks: this.data.tasks, pubsub: this.data.pubsub } );
+            new Child( this.el, data );
         });
 
         this.hook.appendChild( this.el );
@@ -43,10 +51,24 @@ export default class Body {
 
     updateView( route ) {
         console.log( 'updating view: ', route.view );
+        if ( route.view === 'details' ) {
+            this.children = [TaskDetails];
+            this.render( 
+                this.data.tasks.find( task => task.id === +route.parameters[0])
+            );
+        } else {
+            this.children = [TaskForm, TaskList];
+            this.render({
+                tasks: this.data.tasks, 
+                taskIndex: this.data.taskIndex, 
+                pubsub: this.data.pubsub 
+            });
+        }
     }
 
     addTask( task ) {
         this.data.tasks.push( task );
+        this.data.taskIndex++;
         this.render();
     }
 
