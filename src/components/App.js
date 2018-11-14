@@ -13,6 +13,7 @@ class App {
 
         this.data.window.location += this.data.window.location.hash ? '' : '#/';
         this.router = new Router({
+            window: this.data.window,
             location: this.data.window.location,
             pubsub: this.pubsub
         });

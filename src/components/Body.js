@@ -26,6 +26,8 @@ export default class Body {
             pubsub: this.data.pubsub 
         });
 
+        // this.bindEvents();
+
         // binding event handlers' context
         this.updateView = this.updateView.bind( this );
         this.addTask = this.addTask.bind( this );
@@ -38,6 +40,10 @@ export default class Body {
 
         // this.updateView( {view: 'home'} );
     }
+
+    // bindEvents() {
+    //     this.el.addEventListener( 'popstate', (e) => console.log('popstate: ', e) );
+    // }
 
     render( data = {} ) {
         this.el.innerHTML = '';
@@ -53,9 +59,10 @@ export default class Body {
         console.log( 'updating view: ', route.view );
         if ( route.view === 'details' ) {
             this.children = [TaskDetails];
-            this.render( 
-                this.data.tasks.find( task => task.id === +route.parameters[0])
-            );
+            this.render({ 
+                task: this.data.tasks.find( task => task.id === +route.parameters[0]),
+                pubsub: this.data.pubsub
+            });
         } else {
             this.children = [TaskForm, TaskList];
             this.render({

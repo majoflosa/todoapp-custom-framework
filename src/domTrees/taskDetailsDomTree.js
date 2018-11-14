@@ -3,7 +3,7 @@ import dom from '../services/dom';
 const TaskDetails = (data = {}) => {
     return dom('div', {id: 'task-details-wrap'}, [
             dom('div', {className: 'back-wrap'}, [
-                dom('a', {href: '/'}, '« Back')
+                dom('a', {href: '/#/'}, '« Back')
             ]),
             dom('div', {className: 'task-details-title'}, [
                 dom('h4', null, 'Title:'),
