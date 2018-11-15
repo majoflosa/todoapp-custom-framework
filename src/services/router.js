@@ -18,7 +18,6 @@ export default class Router {
     }
 
     setRoute( href, fromPopstate = false ) {
-        // this.location.href = href;
         if ( !fromPopstate ) this.data.window.history.pushState({}, '', href);
 
         let currentRoute = {};
@@ -30,14 +29,16 @@ export default class Router {
         currentRoute.view = hashParts[0] || 'home';
         currentRoute.parameters = hashParts.filter( (part, index) => index !== 0 );
         
-        // console.log( currentRoute );
         this.data.pubsub.emit('view changed', currentRoute );
         
         return currentRoute;
     }
 
     handlePopstate(event) {
-        console.log('popstate: ', event);
         this.setRoute(event.path[0].location.href, true);
+    }
+
+    getCurrentRoute() {
+        return this.location.hash;
     }
 }

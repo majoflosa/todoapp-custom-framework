@@ -20,14 +20,6 @@ export default class Body {
         ];
         this.data.taskIndex = this.data.tasks.length;
 
-        this.render({
-            tasks: this.data.tasks, 
-            taskIndex: this.data.taskIndex, 
-            pubsub: this.data.pubsub 
-        });
-
-        // this.bindEvents();
-
         // binding event handlers' context
         this.updateView = this.updateView.bind( this );
         this.addTask = this.addTask.bind( this );
@@ -38,12 +30,7 @@ export default class Body {
         this.data.pubsub.on( 'new task', (task) => this.addTask(task) );
         this.data.pubsub.on( 'task deleted', (taskId) => this.deleteTask(taskId) );
 
-        // this.updateView( {view: 'home'} );
     }
-
-    // bindEvents() {
-    //     this.el.addEventListener( 'popstate', (e) => console.log('popstate: ', e) );
-    // }
 
     render( data = {} ) {
         this.el.innerHTML = '';
@@ -56,31 +43,88 @@ export default class Body {
 
 
     updateView( route ) {
-        console.log( 'updating view: ', route.view );
-        if ( route.view === 'details' ) {
-            this.children = [TaskDetails];
-            this.render({ 
-                task: this.data.tasks.find( task => task.id === +route.parameters[0]),
-                pubsub: this.data.pubsub
-            });
-        } else {
-            this.children = [TaskForm, TaskList];
-            this.render({
-                tasks: this.data.tasks, 
-                taskIndex: this.data.taskIndex, 
-                pubsub: this.data.pubsub 
-            });
+        switch( route.view ) {
+            case 'active':
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks.filter(task => task.status !== 'done'), 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;
+
+            case 'unstarted':
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks.filter(task => task.status === 'unstarted'), 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;
+
+            case 'ongoing':
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks.filter(task => task.status === 'ongoing'), 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;
+
+            case 'revising':
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks.filter(task => task.status === 'revising'), 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;
+
+            case 'done':
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks.filter(task => task.status === 'done'), 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;
+
+            case 'details':
+                this.children = [TaskDetails],
+                this.render({
+                    task: this.data.tasks.find( task => task.id === +route.parameters[0]),
+                    pubsub: this.data.pubsub
+                });
+                break;
+            
+            case 'home':
+            default:
+                this.children = [TaskForm, TaskList],
+                this.render({
+                    tasks: this.data.tasks, 
+                    taskIndex: this.data.taskIndex, 
+                    pubsub: this.data.pubsub 
+                });
+                break;   
         }
     }
 
     addTask( task ) {
         this.data.tasks.push( task );
         this.data.taskIndex++;
-        this.render();
+        this.render({
+            tasks: this.data.tasks, 
+            taskIndex: this.data.taskIndex, 
+            pubsub: this.data.pubsub 
+        });
     }
 
     deleteTask( taskId ) {
         this.data.tasks = this.data.tasks.filter( task => task.id !== taskId );
-        this.render();
+        this.render({
+            tasks: this.data.tasks, 
+            taskIndex: this.data.taskIndex, 
+            pubsub: this.data.pubsub 
+        });
     }
 }

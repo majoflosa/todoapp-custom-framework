@@ -17,9 +17,7 @@ class NavBar {
     }
 
     cacheDOM() {
-        this.DOM = {
-            navLink: this.el.querySelectorAll('#site-nav a')
-        };
+        this.DOM = { navLink: this.el.querySelectorAll('#site-nav a') };
     }
 
     bindEvents() {
@@ -31,6 +29,9 @@ class NavBar {
     
     render() {
         this.hook.appendChild( this.el );
+        this.el.querySelector(`#site-nav a[href="${this.data.router.getCurrentRoute()}"]`)
+            .classList.add('current');
+        console.log(this.data.router.getCurrentRoute())
     }
 
 
@@ -39,6 +40,10 @@ class NavBar {
         
         let {pubsub} = this.data;
         pubsub.emit('route changed', event.target.href);
+
+        let navLinks = [...this.DOM.navLink];
+        navLinks.forEach( link => link.classList.remove('current') );
+        event.target.classList.add('current');
     }
 }
 
