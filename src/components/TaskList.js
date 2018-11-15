@@ -8,22 +8,22 @@ export default class TaskList {
 
         this.el = dom('div', {id: 'task-list'});
 
+        // child component(s)
         this.child = Task;
         
-        this.render( this.data.tasks );
-
-        // event listeners
+        this.render( );
     }
     
-    render( data = {} ) {
+    render() {
         if ( !this.data.tasks || this.data.tasks.length === 0 ) {
+            // current view has no tasks to display
             this.el.innerHTML = '<p style="text-align: center;">There are currently no tasks.</p>';
             this.hook.appendChild( this.el );
             return;
         }
 
         this.el.innerHTML = '';
-        data.forEach( task => new this.child(this.el, {
+        this.data.tasks.forEach( task => new this.child(this.el, {
             task: task,
             pubsub: this.data.pubsub
         }) );

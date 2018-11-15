@@ -28,19 +28,20 @@ class NavBar {
     }
     
     render() {
+        let { router } = this.data;
+
         this.hook.appendChild( this.el );
-        this.el.querySelector(`#site-nav a[href="${this.data.router.getCurrentRoute()}"]`)
+        this.el.querySelector(`#site-nav a[href="${router.getCurrentRoute()}"]`)
             .classList.add('current');
-        console.log(this.data.router.getCurrentRoute())
     }
 
 
     handleClickNavLink( event ) {
         event.preventDefault();
         
-        let {pubsub} = this.data;
-        pubsub.emit('route changed', event.target.href);
+        this.data.pubsub.emit('route changed', event.target.href);
 
+        // updating css class for selected link
         let navLinks = [...this.DOM.navLink];
         navLinks.forEach( link => link.classList.remove('current') );
         event.target.classList.add('current');

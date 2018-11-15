@@ -10,15 +10,11 @@ export default class Body {
         this.data = data;
 
         this.el = dom('main', {id: 'body'});
+        
+        // child component(s)
         this.children = [TaskForm, TaskList];
 
-        // fetch initial data
-        this.data.tasks = [
-            {id: 1, title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
-            {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
-            {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
-        ];
-        this.data.taskIndex = this.data.tasks.length;
+        this.fetchInitialData();
 
         // binding event handlers' context
         this.updateView = this.updateView.bind( this );
@@ -32,6 +28,15 @@ export default class Body {
 
     }
 
+    fetchInitialData() {
+        this.data.tasks = [
+            {id: 1, title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
+            {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
+            {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
+        ];
+        this.data.taskIndex = this.data.tasks.length;
+    }
+
     render( data = {} ) {
         this.el.innerHTML = '';
         this.children.forEach( Child => {
@@ -41,7 +46,9 @@ export default class Body {
         this.hook.appendChild( this.el );
     }
 
-
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    //  Begin Event handlers
+    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     updateView( route ) {
         switch( route.view ) {
             case 'active':

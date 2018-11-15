@@ -11,6 +11,7 @@ export default class Task {
         this.cacheDOM();
         this.bindEvents();
 
+        // bind event handlers' context
         this.handleClickDetails = this.handleClickDetails.bind( this );
         this.handleDeleteTask = this.handleDeleteTask.bind( this );
     }

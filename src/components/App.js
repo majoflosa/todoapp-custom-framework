@@ -11,6 +11,7 @@ class App {
         this.data = data
         this.pubsub = new PubSub();
 
+        // initiating the router
         this.data.window.location += this.data.window.location.hash ? '' : '#/';
         this.router = new Router({
             window: this.data.window,
@@ -18,8 +19,8 @@ class App {
             pubsub: this.pubsub
         });
 
+        // preparing information to render
         this.el = dom('div', {className: 'content-wrap'});
-
         this.children = [NavBar, Body];
 
         this.render();

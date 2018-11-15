@@ -12,8 +12,6 @@ export default class TaskForm {
         this.cacheDOM();
         this.bindEvents();
         
-        // adding event listeners
-
         // binding event handlers' context
         this.submitForm = this.submitForm.bind( this );
     }
@@ -38,17 +36,19 @@ export default class TaskForm {
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     //  Begin Event handlers
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
     submitForm( e ) {
+        // ignore all keypress except ENTER
         if ( e.type === 'keypress' && e.which !== 13 ) return false;
         
-        let { pubsub } = this.data;
-        pubsub.emit('new task', {
+        // send new task's data to 'global' event handler
+        this.data.pubsub.emit('new task', {
             id: this.data.taskIndex + 1,
             title: this.DOM.taskInput.value,
             status: 'unstarted',
             description: 'no description'
         });
+
+        // clear field after submitting
         this.DOM.taskInput.value = '';
     }
 }

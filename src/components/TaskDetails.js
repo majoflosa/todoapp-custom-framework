@@ -12,6 +12,7 @@ export default class TaskDetails {
         this.cacheDOM();
         this.bindEvents();
 
+        // binding event handlers' context
         this.handleClickBack = this.handleClickBack.bind( this );
     }
 
@@ -29,7 +30,7 @@ export default class TaskDetails {
         this.hook.appendChild( this.el );
     }
 
-    handleClickBack(event) {
+    handleClickBack( event ) {
         event.preventDefault();
         this.data.pubsub.emit('route changed', event.target.href)
     }

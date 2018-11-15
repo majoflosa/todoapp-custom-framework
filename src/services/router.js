@@ -14,27 +14,31 @@ export default class Router {
     }
 
     bindEvents() {
+        // handle click on browser's Back and Forward
         this.data.window.addEventListener('popstate', (e) => this.handlePopstate(e) );
     }
 
     setRoute( href, fromPopstate = false ) {
         if ( !fromPopstate ) this.data.window.history.pushState({}, '', href);
 
-        let currentRoute = {};
-        
+        // turn url to array of parts after hash
         let hashParts = href.split('#/');
         hashParts.shift();
         hashParts = hashParts[0].split('/');
         
+        // build route information from hash parts
+        let currentRoute = {};
         currentRoute.view = hashParts[0] || 'home';
         currentRoute.parameters = hashParts.filter( (part, index) => index !== 0 );
         
+        // invoke handler that controls view rendering (Body.updateView)
         this.data.pubsub.emit('view changed', currentRoute );
         
         return currentRoute;
     }
 
     handlePopstate(event) {
+        // keep view controller synced on browser's Back and Forward click
         this.setRoute(event.path[0].location.href, true);
     }
 
