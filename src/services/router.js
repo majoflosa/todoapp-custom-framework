@@ -1,25 +1,29 @@
 export default class Router {
     constructor( data = {} ) {
-        this.data = data;
-        this.location = this.data.location;
+        // initial router properties
+        this.pubsub = data.pubsub;
+        this.location = window.location;
 
+        // bind methods' context to current instance
         this.setRoute = this.setRoute.bind( this );
-        this.setRoute( this.location.href );
-
-        this.bindEvents();
-
         this.handlePopstate = this.handlePopstate.bind( this );
 
-        this.data.pubsub.on( 'route changed', (href) => this.setRoute(href) );
+        // set initial route for currently loaded view
+        this.setRoute( this.location.href );
+        // bind handlers to their listeners
+        this.bindEvents();
+
+        // listen for changes in routes
+        this.pubsub.on( 'route changed', (href) => this.setRoute(href) );
     }
 
     bindEvents() {
         // handle click on browser's Back and Forward
-        this.data.window.addEventListener('popstate', (e) => this.handlePopstate(e) );
+        window.addEventListener('popstate', (e) => this.handlePopstate(e) );
     }
 
     setRoute( href, fromPopstate = false ) {
-        if ( !fromPopstate ) this.data.window.history.pushState({}, '', href);
+        if ( !fromPopstate ) window.history.pushState({}, '', href);
 
         // turn url to array of parts after hash
         let hashParts = href.split('#/');
@@ -32,7 +36,7 @@ export default class Router {
         currentRoute.parameters = hashParts.filter( (part, index) => index !== 0 );
         
         // invoke handler that controls view rendering (Body.updateView)
-        this.data.pubsub.emit('view changed', currentRoute );
+        this.pubsub.emit('view changed', currentRoute );
         
         return currentRoute;
     }
