@@ -31,8 +31,11 @@ class NavBar {
         let { router } = this.data;
 
         this.hook.appendChild( this.el );
-        this.el.querySelector(`#site-nav a[href="${router.getCurrentRoute()}"]`)
-            .classList.add('current');
+        
+        if ( this.el.querySelector(`#site-nav a[href="${router.getCurrentRoute()}"]`) ) {
+            this.el.querySelector(`#site-nav a[href="${router.getCurrentRoute()}"]`)
+                .classList.add('current');
+        }
     }
 
 

@@ -29,12 +29,12 @@ export default class Body {
     }
 
     fetchInitialData() {
-        this.data.tasks = [
-            {id: 1, title: 'Do a thing', status: 'ongoing', description: 'Descriptive description here.'},
-            {id: 2, title: 'Do a second thing', status: 'revising', description: 'Descriptive description here.'},
-            {id: 3, title: 'Do another thing', status: 'done', description: 'Descriptive description here.'}
-        ];
-        this.data.taskIndex = this.data.tasks.length;
+        this.data.http.get( `${this.data.http.baseUrl}/tasks` ).then( data => {
+            console.log( data );
+            this.data.tasks = data;
+            this.data.taskIndex = this.data.tasks.length;
+        }).catch(err => console.log(err) );
+
     }
 
     render( data = {} ) {
@@ -117,13 +117,21 @@ export default class Body {
     }
 
     addTask( task ) {
-        this.data.tasks.push( task );
-        this.data.taskIndex++;
-        this.render({
-            tasks: this.data.tasks, 
-            taskIndex: this.data.taskIndex, 
-            pubsub: this.data.pubsub 
-        });
+        this.data.http.post( `${this.data.http.baseUrl}/tasks`, {
+            user_id: 1,
+            title: task.title,
+            status: 'unstarted',
+            description: ''
+        }).then( task => {
+            console.log( task );
+        }).catch( err => console.log( err ) );
+        // this.data.tasks.push( task );
+        // this.data.taskIndex++;
+        // this.render({
+        //     tasks: this.data.tasks, 
+        //     taskIndex: this.data.taskIndex, 
+        //     pubsub: this.data.pubsub 
+        // });
     }
 
     deleteTask( taskId ) {

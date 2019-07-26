@@ -232,6 +232,13 @@ input[type="text"]::placeholder, textarea::placeholder {
   margin: 5px 0 0;
   float: right;
 }
+.editing.details-field-wrap:hover {
+  border: none;
+}
+#edit-title {
+  font-size: 1.3em;
+  font-weight: bold;
+}
 
 .task-details-title h2 {
   margin: 0;

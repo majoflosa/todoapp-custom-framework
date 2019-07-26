@@ -7,7 +7,7 @@
     "build-dev": "webpack --mode development",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode development",
-    "serve": "webpack-dev-server --mode development --hot"
+    "start": "webpack-dev-server --mode development --hot"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/majoflosa/todoapp-custom-framework#readme",
   "dependencies": {
     "@babel/core": "^7.1.5",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.1.5",
     "babel-loader": "^8.0.4",
     "body-parser": "^1.18.3",
@@ -32,5 +33,6 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
-  }
+  },
+  "devDependencies": {}
 }
