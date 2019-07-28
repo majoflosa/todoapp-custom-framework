@@ -1,15 +1,18 @@
-export default class Router {
+import Base from '../components/Base';
+
+export default class Router extends Base {
     constructor( data = {} ) {
+        super();
+
         // initial router properties
-        this.pubsub = data.pubsub;
-        this.location = window.location;
+        // this.pubsub = data.pubsub;
 
         // bind methods' context to current instance
         this.setRoute = this.setRoute.bind( this );
         this.handlePopstate = this.handlePopstate.bind( this );
 
         // set initial route for currently loaded view
-        this.setRoute( this.location.href );
+        this.setRoute( window.location.href );
         // bind handlers to their listeners
         this.bindEvents();
 
@@ -21,6 +24,10 @@ export default class Router {
         // handle click on browser's Back and Forward
         window.addEventListener('popstate', (e) => this.handlePopstate(e) );
     }
+
+    // mapRoutes( map ) {
+    //     this.routes = map;
+    // }
 
     setRoute( href, fromPopstate = false ) {
         if ( !fromPopstate ) window.history.pushState({}, '', href);
@@ -47,6 +54,6 @@ export default class Router {
     }
 
     getCurrentRoute() {
-        return this.location.hash;
+        return window.location.hash;
     }
 }

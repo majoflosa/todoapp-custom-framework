@@ -2,7 +2,7 @@ import Base from './Base';
 import NavBarDomTree from '../domTrees/navBarDomTree';
 
 class NavBar extends Base {
-    constructor( hook, data = {} ) {
+    constructor( hook ) {
         super();
 
         this.hook = hook;
@@ -33,7 +33,7 @@ class NavBar extends Base {
         this.hook.appendChild( this.el );
 
         this.DOM.navLinks.forEach( $link => {
-            if ( $link.attributes.href.value === this.router.getCurrentRoute() ) {
+            if ( $link.attributes.href.value === window.location.hash ) {
                 $link.classList.add('current');
             }
         });

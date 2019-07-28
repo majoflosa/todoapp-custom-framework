@@ -1,16 +1,21 @@
 import Http from '../services/http';
-import Router from '../services/router';
+// import Router from '../services/router';
 import PubSub from '../services/pubsub';
 
 const http = new Http();
 const pubsub = new PubSub();
-const router = new Router({ pubsub });
+// const router = new Router({ 
+//     pubsub,
+//     routes: [
+//         // { path: '/', component: }
+//     ]
+// });
 
 export default class Base {
     constructor() {
         this.http = http;
         this.pubsub = pubsub;
-        this.router = router;
+        // this.router = router;
     }
 
     init() {
