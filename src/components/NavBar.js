@@ -2,10 +2,10 @@ import Base from './Base';
 import NavBarDomTree from '../domTrees/navBarDomTree';
 
 class NavBar extends Base {
-    constructor( hook ) {
-        super();
+    constructor( data ) {
+        super( data );
 
-        this.hook = hook;
+        // this.hook = hook;
         // this.data = data;
         
         this.el = NavBarDomTree();

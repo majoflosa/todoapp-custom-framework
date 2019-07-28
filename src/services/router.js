@@ -1,11 +1,12 @@
 import Base from '../components/Base';
+import NotFound from '../components/View.NotFound';
 
 export default class Router extends Base {
-    constructor( data = {} ) {
+    constructor( routesMap ) {
         super();
 
         // initial router properties
-        // this.pubsub = data.pubsub;
+        this.routes = routesMap;
 
         // bind methods' context to current instance
         this.setRoute = this.setRoute.bind( this );
@@ -55,5 +56,10 @@ export default class Router extends Base {
 
     getCurrentRoute() {
         return window.location.hash;
+    }
+
+    getRouteView( path ) {
+        const route = this.routes.find( route => route.path === path );
+        return route ? route.view : NotFound;
     }
 }

@@ -1,9 +1,9 @@
 import TaskFormDomTree from '../domTrees/taskFormDomTree';
+import Base from './Base';
 
-export default class TaskForm {
-    constructor( hook, data = {} ) {
-        this.hook = hook;
-        this.data = data;
+export default class TaskForm extends Base {
+    constructor( data = {} ) {
+        super( data );
 
         this.el = TaskFormDomTree();
         

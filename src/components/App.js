@@ -2,22 +2,17 @@ import NavBar from './NavBar';
 import Body from './Body';
 
 import dom from '../services/dom';
-// import PubSub from '../services/pubsub';
 import Router from '../services/router';
-// import Http from '../services/http';
+import routesMap from '../services/routesMap';
 
 class App {
     constructor( hook, data = {} ) {
         this.hook = hook;
-        this.data = data
-        // this.pubsub = new PubSub();
-        // this.http = new Http();
+        this.data = data;
 
         // initiating the router
         window.location += window.location.hash ? '' : '#/';
-        this.router = new Router({
-            // pubsub: this.pubsub
-        });
+        this.router = new Router( routesMap );
 
         // preparing information to render
         this.el = dom('div', {className: 'content-wrap'});
@@ -27,7 +22,7 @@ class App {
     }
 
     render() {
-        this.children.forEach( Child => new Child(this.el) );
+        this.children.forEach( Child => new Child({ hook: this.el, router: this.router }) );
 
         this.hook.appendChild( this.el );
     }

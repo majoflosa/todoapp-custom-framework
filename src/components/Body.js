@@ -6,43 +6,31 @@ import TaskDetails from './TaskDetails';
 import dom from '../services/dom';
 
 export default class Body extends Base {
-    constructor( hook ) {
-        super();
+    constructor( data ) {
+        super( data );
 
-        this.hook = hook;
+        // this.hook = hook;
         // this.data = data;
 
         this.el = dom('main', {id: 'body'});
         
         // child component(s)
-        this.children = [TaskForm, TaskList];
-
-        // this.fetchInitialData();
+        this.children = [TaskForm];
 
         // binding event handlers' context
         this.updateView = this.updateView.bind( this );
         this.addTask = this.addTask.bind( this );
         this.deleteTask = this.deleteTask.bind( this );
 
-        // event listeners
-        // this.pubsub.on( 'view changed', (newRoute) => this.updateView(newRoute) );
-        // this.pubsub.on( 'new task', (task) => this.addTask(task) );
-        // this.pubsub.on( 'task deleted', (taskId) => this.deleteTask(taskId) );
+        // this.render();
 
-        this.render();
+        this.pubsub.on( 'view changed', (path) => this.updateView(path) );
     }
 
-    fetchInitialData() {
-        // this.http.get( `${this.http.baseUrl}/tasks` ).then( data => {
-        //     console.log( data );
-        //     this.tasks = data;
-        //     this.taskIndex = this.tasks.length;
-        // }).catch(err => console.log(err) );
-    }
-
-    render() {
+    render( View ) {
         this.el.innerHTML = '';
-        this.children.forEach( Child => new Child(this.el) );
+
+        new View({ hook: this.el });
 
         this.hook.appendChild( this.el );
     }
@@ -50,71 +38,11 @@ export default class Body extends Base {
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
     //  Begin Event handlers
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-    updateView( route ) {
-        switch( route.view ) {
-            case 'active':
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks.filter(task => task.status !== 'done'), 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;
-
-            case 'unstarted':
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks.filter(task => task.status === 'unstarted'), 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;
-
-            case 'ongoing':
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks.filter(task => task.status === 'ongoing'), 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;
-
-            case 'revising':
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks.filter(task => task.status === 'revising'), 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;
-
-            case 'done':
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks.filter(task => task.status === 'done'), 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;
-
-            case 'details':
-                this.children = [TaskDetails],
-                this.render({
-                    task: this.tasks.find( task => task.id === +route.parameters[0]),
-                    pubsub: this.pubsub
-                });
-                break;
-            
-            case 'home':
-            default:
-                this.children = [TaskForm, TaskList],
-                this.render({
-                    tasks: this.tasks, 
-                    taskIndex: this.taskIndex, 
-                    pubsub: this.pubsub 
-                });
-                break;   
-        }
+    updateView( path ) {
+        const View = this.router.getRouteView( `/${path.view}` );
+        // console.log( 'path: ', path );
+        // console.log( 'View: ', View );
+        this.render( View );
     }
 
     addTask( task ) {

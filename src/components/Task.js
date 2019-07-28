@@ -1,10 +1,12 @@
 import TaskDomTree from '../domTrees/taskDomTree';
+import Base from './Base';
 
-export default class Task {
-    constructor( hook, data = {} ) {
-        this.hook = hook;
-        this.data = data;
-        this.el = TaskDomTree( this.data.task );
+export default class Task extends Base {
+    constructor( data = {} ) {
+        super( data );
+        // this.hook = hook;
+        // this.data = data;
+        this.el = TaskDomTree( this.task );
         
         this.render();
 
@@ -34,11 +36,11 @@ export default class Task {
 
     handleClickDetails( event ) {
         event.preventDefault();
-        this.data.pubsub.emit('route changed', event.target.href );
+        this.pubsub.emit('route changed', event.target.href );
     }
 
     handleDeleteTask( event ) {
         event.preventDefault();
-        this.data.pubsub.emit('task deleted', this.data.task.id );
+        this.pubsub.emit('task deleted', this.task.id );
     }
 }
